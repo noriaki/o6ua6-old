@@ -56,3 +56,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'mongoid', '~> 6'
 gem 'active_model_serializers'
 gem "committee"
+gem "haml-rails"
