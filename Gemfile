@@ -28,7 +28,7 @@ group :development, :test do
   gem 'prmd', github: 'interagent/prmd'
   gem 'rspec-rails', '~> 3.5'
   gem "factory_girl_rails", "~> 4.0"
-  gem "mongoid-rspec", github: "chocoken517/mongoid-rspec", ref: "f6d6b6d"
+  gem "mongoid-rspec", github: "chocoken517/mongoid-rspec"
   gem 'version_bumper'
 end
 
@@ -57,3 +57,5 @@ gem 'mongoid', '~> 6'
 gem 'active_model_serializers'
 gem "committee"
 gem "haml-rails"
+
+gem "json"
