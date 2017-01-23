@@ -12,4 +12,8 @@ class Kanji
   validates_format_of :identifier, with: /\A[0-9a-z]+\z/
 
   before_validation IdentifierCallback.new
+
+  def image_url
+    "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{identifier}.jpg"
+  end
 end

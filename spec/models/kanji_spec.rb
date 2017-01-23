@@ -18,4 +18,13 @@ RSpec.describe Kanji, type: :model do
                       .with_options(unique: true, background: true)
     end
   end
+
+  describe "methods" do
+    let(:kanji) { create(:kanji) }
+
+    it :image_url do
+      subject = kanji.image_url
+      expect(subject).to eql("https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{kanji.identifier}.jpg")
+    end
+  end
 end
