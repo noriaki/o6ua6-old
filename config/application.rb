@@ -18,6 +18,8 @@ Bundler.require(*Rails.groups)
 
 module O6ua6
   class Application < Rails::Application
+    config.paths.add 'app/callbacks', eager_load: true
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
