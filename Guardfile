@@ -40,7 +40,8 @@ end
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "ruby -W0 bin/bundle exec rspec -fd" do
+#guard :rspec, cmd: "ruby -W0 bin/bundle exec rspec -fd" do
+guard :rspec, cmd: "bundle exec rspec -fd" do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
