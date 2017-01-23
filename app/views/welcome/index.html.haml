@@ -1,3 +1,5 @@
 %h1 Welcome#index
 %p
-  = image_tag @kanji.image_url
+  - @gengo.image_urls.each do |url|
+    = image_tag url, size: '320x225'
+    %br

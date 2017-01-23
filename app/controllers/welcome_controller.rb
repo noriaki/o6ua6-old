@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    @kanji = Kanji.random.first
+    @gengo = Gengo.random.first
   end
 end
