@@ -1,7 +1,6 @@
 GIT
   remote: https://github.com/chocoken517/mongoid-rspec.git
-  revision: f6d6b6dd8e78c292a6607792afd4d89e6c9fc6ec
-  ref: f6d6b6d
+  revision: 6759efd508fa24dbe0ad54c41353fa2c8e86dc3f
   specs:
     mongoid-rspec (4.0.0)
       mongoid (~> 6.0)
@@ -125,7 +124,20 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    haml (4.0.7)
+      tilt
+    haml-rails (0.9.0)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 4.0.6, < 5.0)
+      html2haml (>= 1.0.1)
+      railties (>= 4.0.1)
     highline (1.7.8)
+    html2haml (2.0.0)
+      erubis (~> 2.7.0)
+      haml (~> 4.0.0)
+      nokogiri (~> 1.6.0)
+      ruby_parser (~> 3.5)
     i18n (0.7.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -164,7 +176,7 @@ GEM
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
     nio4r (1.2.1)
-    nokogiri (1.7.0.1)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -230,6 +242,9 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby_parser (3.8.4)
+      sexp_processor (~> 4.1)
+    sexp_processor (4.7.0)
     shellany (0.0.1)
     slop (3.6.0)
     spring (2.0.1)
@@ -246,6 +261,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.4)
     thread_safe (0.3.5)
+    tilt (2.0.5)
     travis (1.8.5)
       backports
       faraday (~> 0.9)
@@ -268,7 +284,7 @@ GEM
       debug_inspector
       railties (>= 5.0)
     websocket (1.2.3)
-    websocket-driver (0.6.4)
+    websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
 
@@ -286,7 +302,9 @@ DEPENDENCIES
   guard-bundler
   guard-rake
   guard-rspec
+  haml-rails
   jbuilder (~> 2.5)
+  json
   listen (~> 3.0.5)
   mongoid (~> 6)
   mongoid-rspec!
@@ -304,4 +322,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.14.1
+   1.14.2

@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+File.open(Rails.root.join('db', 'KanjiCandidates.json')) do |file|
+  JSON.load(file).each do |kanji|
+    Kanji.where(surface: kanji.to_s).first_or_create
+  end
+end
+
+File.open(Rails.root.join('db', 'GengoCandidates.json')) do |file|
+  JSON.load(file).each do |gengo|
+    Gengo.where(surface: gengo.to_s).first_or_create
+  end
+end
