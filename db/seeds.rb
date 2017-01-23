@@ -6,14 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+::Mongoid.purge!
+
 File.open(Rails.root.join('db', 'KanjiCandidates.json')) do |file|
-  JSON.load(file).each do |kanji|
-    Kanji.where(surface: kanji.to_s).first_or_create
-  end
+  Kanji.collection.bulk_write(
+    JSON.load(file).map{|kanji|
+      {
+        insert_one: {
+          identifier: Identifier.identify(kanji),
+          surface: kanji.to_s
+        }
+      }
+    }, bypass_document_validation: true, ordered: false)
 end
 
 File.open(Rails.root.join('db', 'GengoCandidates.json')) do |file|
-  JSON.load(file).each do |gengo|
-    Gengo.where(surface: gengo.to_s).first_or_create
-  end
+  Gengo.collection.bulk_write(
+    JSON.load(file).map{|gengo|
+      {
+        insert_one: {
+          identifier: Identifier.identify(gengo),
+          surface: gengo.to_s
+        }
+      }
+    }, bypass_document_validation: true, ordered: false)
 end
+
+::Mongoid::Tasks::Database.create_indexes
