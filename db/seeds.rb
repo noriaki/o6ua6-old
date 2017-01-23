@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+File.open(Rails.root.join('db', 'KanjiCandidates.json')) do |file|
+  JSON.load(file).each do |term|
+    Kanji.where(surface: term.to_s).first_or_create
+  end
+end
