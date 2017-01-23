@@ -7,7 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 File.open(Rails.root.join('db', 'KanjiCandidates.json')) do |file|
-  JSON.load(file).each do |term|
-    Kanji.where(surface: term.to_s).first_or_create
+  JSON.load(file).each do |kanji|
+    Kanji.where(surface: kanji.to_s).first_or_create
+  end
+end
+
+File.open(Rails.root.join('db', 'GengoCandidates.json')) do |file|
+  JSON.load(file).each do |gengo|
+    Gengo.where(surface: gengo.to_s).first_or_create
   end
 end
