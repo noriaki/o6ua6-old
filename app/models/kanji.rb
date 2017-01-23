@@ -1,5 +1,6 @@
 class Kanji
   include Mongoid::Document
+  include RandomFinder
 
   field :identifier, type: String
   field :surface, type: String
