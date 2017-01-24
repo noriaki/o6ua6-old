@@ -19,4 +19,12 @@ class Gengo
       "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{Identifier.identify(kanji)}.jpg"
     }
   end
+
+  class << self
+    def find_random(options = {})
+      options[:limit] ||= 1
+      options[:excepts] ||= []
+      self.nin(identifier: options[:excepts]).random(options[:limit].to_i)
+    end
+  end
 end
