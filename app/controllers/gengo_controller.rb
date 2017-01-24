@@ -1,8 +1,11 @@
 class GengoController < ApplicationController
+  # GET /gengo/random(/limit/:limit(/excepts/*excepts))
   def random
-    render json: Gengo.find_random(
-             limit: params[:limit],
-             excepts: extract_ids(params[:excepts]))
+    @gengo = Gengo.find_random(
+      limit: params[:limit],
+      excepts: extract_ids(params[:excepts])
+    )
+    render json: @gengo
   end
 
   private
