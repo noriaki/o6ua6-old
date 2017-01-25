@@ -29,6 +29,7 @@ class Gengo
                    calc_rating(self.display_rating, other.display_rating)
     self.update(display_rating: winner_rating)
     other.update(display_rating: loser_rating)
+    Rails.logger.info("WL") { "|||#{self.identifier}/#{other.identifier}" }
   end
 
   def lost(other)
