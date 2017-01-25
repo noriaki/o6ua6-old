@@ -49,6 +49,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'travis'
   gem 'travis-lint'
+  gem 'growl'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
