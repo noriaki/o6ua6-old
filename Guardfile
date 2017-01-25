@@ -43,6 +43,7 @@ end
 #guard :rspec, cmd: "ruby -W0 bin/bundle exec rspec -fd" do
 guard :rspec, cmd: "bundle exec rspec -fd" do
   require "guard/rspec/dsl"
+  notification :growl
   dsl = Guard::RSpec::Dsl.new(self)
 
   # Feel free to open issues for suggestions and improvements
