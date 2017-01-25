@@ -93,7 +93,7 @@ RSpec.describe Gengo, type: :model do
       let(:loser) { create(:gengo_loser) }
 
       it "call to other#won(self)" do
-        subject = double("Gengo").as_null_object
+        subject = spy("Gengo")
         loser.lost(subject)
         expect(subject).to have_received(:won).with(loser)
       end
