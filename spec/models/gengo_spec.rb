@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Gengo, type: :model do
   describe "fields" do
     it :identifier do
