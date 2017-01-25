@@ -59,5 +59,6 @@ gem 'mongoid', '~> 6'
 gem 'active_model_serializers'
 gem "committee"
 gem "haml-rails"
+gem "glicko2"
 
 gem "json"
