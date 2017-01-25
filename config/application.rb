@@ -23,5 +23,11 @@ module O6ua6
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    logger = ActiveSupport::Logger.new(
+      Rails.root.join("log/#{Rails.env.to_s}.log"), 'daily')
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+
   end
 end
