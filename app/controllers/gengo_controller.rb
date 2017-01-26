@@ -7,9 +7,4 @@ class GengoController < ApplicationController
     )
     render json: @gengo
   end
-
-  private
-  def extract_ids(excepts)
-    excepts.is_a?(String) ? excepts.split('/') : excepts
-  end
 end
