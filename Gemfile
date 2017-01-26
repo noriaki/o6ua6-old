@@ -57,6 +57,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'mongoid', '~> 6'
+gem 'mongo_session_store-rails4', git: 'https://github.com/drgcms/mongo_session_store', branch: 'rails5'
 gem 'active_model_serializers'
 gem "committee"
 gem "haml-rails"
