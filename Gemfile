@@ -47,6 +47,7 @@ group :development do
   gem 'guard-bundler', require: false
   gem 'guard-rake'
   gem 'guard-rspec', require: false
+  gem 'guard-rails', require: false
   gem 'travis'
   gem 'travis-lint'
   gem 'growl'
