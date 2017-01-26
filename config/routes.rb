@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'gengo/random(/limit/:limit(/excepts/*excepts))', to: 'gengo#random', format: false
+  post 'vote', to: 'vote#perform', format: false
 
   get 'welcome/index'
 
