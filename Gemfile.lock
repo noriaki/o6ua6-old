@@ -8,6 +8,14 @@ GIT
       rspec (~> 3.3)
 
 GIT
+  remote: https://github.com/drgcms/mongo_session_store
+  revision: 079212a6e6842789206951a033db7cca1b0d517b
+  branch: rails5
+  specs:
+    mongo_session_store-rails4 (6.0.1)
+      actionpack (>= 3.1)
+
+GIT
   remote: https://github.com/interagent/prmd.git
   revision: dd3b31605b09f9a1b3103ad608d9066e45deff21
   specs:
@@ -119,6 +127,9 @@ GEM
       guard (~> 2.2)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
+    guard-rails (0.8.0)
+      guard (~> 2.11)
+      guard-compat (~> 1.0)
     guard-rake (1.0.0)
       guard
       rake
@@ -304,12 +315,14 @@ DEPENDENCIES
   glicko2
   growl
   guard-bundler
+  guard-rails
   guard-rake
   guard-rspec
   haml-rails
   jbuilder (~> 2.5)
   json
   listen (~> 3.0.5)
+  mongo_session_store-rails4!
   mongoid (~> 6)
   mongoid-rspec!
   prmd!
