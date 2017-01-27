@@ -87,15 +87,6 @@ RSpec.describe Gengo, type: :model do
         expect(loser.changed?).to be false
         expect(loser.reload.display_rating).to eql(loser_rating - 20)
       end
-
-      it "output log(info)" do
-        allow(Rails.logger).
-          to receive(:info).and_wrap_original do |m, *a, &block|
-          m.call(*a, &block)
-        end
-        winner.won(loser)
-        expect(Rails.logger).to have_received(:info).with("WL")
-      end
     end
 
     describe "#lost(other)" do

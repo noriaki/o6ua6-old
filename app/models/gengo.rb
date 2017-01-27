@@ -1,13 +1,22 @@
 class Gengo
+  @@defaults = {
+    display_rating: Glicko2::DEFAULT_GLICKO_RATING,
+    rating: Glicko2::DEFAULT_GLICKO_RATING,
+    rating_deviation: Glicko2::DEFAULT_GLICKO_RATING_DEVIATION,
+    volatility: Glicko2::DEFAULT_VOLATILITY
+  }
+  cattr_reader :defaults
+
   include Mongoid::Document
   include RandomFinder
+  include SeedsImporter
 
   field :identifier, type: String
   field :surface, type: String
-  field :display_rating, type: Float, default: 1500.0
-  field :rating, type: Float, default: 1500.0
-  field :rating_deviation, type: Float, default: 350.0
-  field :volatility, type: Float, default: 0.06
+  field :display_rating, type: Float, default: @@defaults[:display_rating]
+  field :rating, type: Float, default: @@defaults[:rating]
+  field :rating_deviation, type: Float, default: @@defaults[:rating_deviation]
+  field :volatility, type: Float, default: @@defaults[:volatility]
 
   index({ identifier: 1 }, { unique: true, background: true })
 
@@ -29,7 +38,6 @@ class Gengo
                    calc_rating(self.display_rating, other.display_rating)
     self.update(display_rating: winner_rating)
     other.update(display_rating: loser_rating)
-    Rails.logger.info("WL") { "|||#{self.identifier}/#{other.identifier}" }
   end
 
   def lost(other)
@@ -41,6 +49,11 @@ class Gengo
   end
 
   class << self
+    def import!
+      filepath = Rails.root.join 'db', 'GengoCandidates.json'
+      self.import_from_json(filepath, @@defaults)
+    end
+
     def find_random(options = {})
       options[:limit] ||= 1
       options[:excepts] ||= []
