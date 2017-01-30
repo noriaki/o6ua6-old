@@ -24,6 +24,8 @@ module O6ua6
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.time_zone = 'Asia/Tokyo'
+
     config.log_formatter = ::Logger::Formatter.new
 
     logger = ActiveSupport::Logger.new(
