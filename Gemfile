@@ -64,5 +64,6 @@ gem 'active_model_serializers'
 gem "committee"
 gem "haml-rails"
 gem "glicko2"
+gem 'aws-sdk', '~> 2'
 
 gem "json"
