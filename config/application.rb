@@ -33,5 +33,15 @@ module O6ua6
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
 
+    wl_logger = ActiveSupport::Logger.new(
+      Rails.root.join("log/wl_#{Rails.env.to_s}.log"), 'daily')
+    wl_logger.formatter = ActiveSupport::Logger::SimpleFormatter.new
+    config.wl_logger = ActiveSupport::TaggedLogging.new(wl_logger)
+
+    # alias `wl_logger` to `Rails.wl_logger`
+    Rails.instance_eval do
+      def wl_logger; Rails.application.config.wl_logger; end
+    end
+
   end
 end
