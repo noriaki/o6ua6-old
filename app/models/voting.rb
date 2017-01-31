@@ -10,6 +10,12 @@ class Voting
 
   default_scope -> { desc(:counting_end_at) }
 
+  def to_h
+    a = Hash[*fields.keys.dup.map{|key| [key, self.send(key)] }.flatten]
+    a['id'] = a.delete('_id')
+    a.with_indifferent_access
+  end
+
   def filename
     "voting_#{counting_end_at.strftime('%Y%m%d-%H%M%S')}_#{id.to_s}"
   end

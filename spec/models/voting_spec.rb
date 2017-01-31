@@ -16,4 +16,16 @@ RSpec.describe Voting, type: :model do
       is_expected.to have_fields(:votes_count).of_type(Integer)
     end
   end
+
+  describe "methods" do
+    let(:voting) { create(:voting) }
+
+    it "#to_h" do
+      expect(voting.to_h).not_to include :_id
+      expect(voting.to_h).to include :id,
+                                     :counting_start_at,
+                                     :counting_end_at,
+                                     :votes_count
+    end
+  end
 end
