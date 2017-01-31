@@ -20,13 +20,28 @@ class Voting
     "voting_#{counting_end_at.strftime('%Y%m%d-%H%M%S')}_#{id.to_s}"
   end
 
-  def backup
-    filename
+  def backup(votes)
+    if Rails.env.development?
+      File.open(Rails.root.join('tmp', filename), 'w') do |file|
+        file.puts votes.to_log
+      end
+    else
+      s3.object("votes/log/#{filename}").put(
+        acl: 'bucket-owner-full-control',
+        body: votes.to_log,
+        metadata: Hash[*to_h.map{|k,v| [k,v.to_s] }.flatten]
+      )
+    end
   end
 
   class << self
     def term(end_time = Time.zone.now)
       self.first.counting_end_at..end_time
     end
+  end
+
+  private
+  def s3
+    Aws::S3::Bucket.new(Aws::S3.bucket_name)
   end
 end

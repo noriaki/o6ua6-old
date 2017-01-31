@@ -27,5 +27,33 @@ RSpec.describe Voting, type: :model do
                                      :counting_end_at,
                                      :votes_count
     end
+
+    it "#filename" do
+      expect(voting.filename).to eql("voting_20000101-000000_#{voting.id}")
+    end
+
+    it "#backup(votes: Iteratable<Gengo>)" do
+      create :vote
+      allow(Aws::S3::Bucket).to receive(:new).and_wrap_original{|m, *args|
+        m.call(*args, stub_responses: { put_object: { etag: 'test-obj' } })
+      }
+      expect(voting).to receive(:to_h).and_call_original.once
+      expect(voting).to receive(:filename).and_call_original.once
+      expect{
+        expect(voting.backup(Vote.all)).to(
+          respond_to(:etag).
+          and have_attributes(etag: 'test-obj')
+        )
+      }.not_to raise_error
+    end
+
+    it ".term(end_time: Time)" do
+      voting
+      current_time = Time.zone.now
+      subject = Voting.term(current_time)
+      expect(subject).to be_a(Range)
+      expect(subject.first).to eql voting.counting_end_at
+      expect(subject.end).to eql current_time
+    end
   end
 end
