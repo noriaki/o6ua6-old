@@ -1,4 +1,6 @@
 class Gengo
+  DEFAULT_BULK_UPDATE_OPTIONS =
+    { bypass_document_validation: false, ordered: false }
   @@defaults = {
     display_rating: Glicko2::DEFAULT_GLICKO_RATING,
     rating: Glicko2::DEFAULT_GLICKO_RATING,
@@ -63,6 +65,24 @@ class Gengo
       options[:limit] ||= 1
       options[:excepts] ||= []
       self.nin(identifier: options[:excepts]).random(options[:limit].to_i)
+    end
+
+    def bulk_update(operations)
+      self.collection.bulk_write(
+        operations.map {|operation|
+          if operation.is_a? Array
+            { update_one: {
+                filter: operation[0],
+                update: { '$set' => operation[1] }
+              } }
+          elsif operation.is_a? self
+            { update_one: {
+                filter: { identifier: operation.identifier },
+                update: { '$set' => operation.attributes_will_change }
+              } }
+          end
+        }, DEFAULT_BULK_UPDATE_OPTIONS
+      )
     end
   end
 

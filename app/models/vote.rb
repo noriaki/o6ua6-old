@@ -1,4 +1,7 @@
 class Vote
+  WIN = 1
+  LOSE = 2
+
   include Mongoid::Document
   include Mongoid::Timestamps::Created::Short
 
@@ -40,37 +43,47 @@ class Vote
       }
     end
 
-    def counting
-      c_time = Time.now
-      gengo_all = Gengo.all.cache
-      period = Glicko2::RatingPeriod.from_objs(gengo_all)
-      self.session(Voting.term(c_time)).each do |vote|
+    def dispose(players)
+      period = Glicko2::RatingPeriod.from_objs(players)
+      players_map = players.group_by(&:identifier)
+      self.each do |vote|
         period.game(
           [
-            gengo_all.where(identifier: vote.winner).first,
-            gengo_all.where(identifier: vote.loser).first
-          ],
-          [1, 2]
-        )
-        vote.log
+            players_map[vote.winner].first,
+            players_map[vote.loser].first
+          ], [WIN, LOSE])
       end
-      next_period = period.generate_next
-      next_period.players.each do |player|
-        player.update_obj
-        gengo = player.obj
-        gengo.display_rating = gengo.rating
-        gengo.save
+      period.generate_next.players.map do |player|
+        player.update_obj; player.obj
       end
+    end
+
     def to_log
       self.each.map(&:to_log).join("\n")
     end
 
+    def counting
+      count_target_range = Voting.term
+      gengo_all = Gengo.all.cache
+      votes = self.session(count_target_range).cache
+      calculated_gengos = votes.dispose(gengo_all)
+      before_calculated_gengos = calculated_gengos.map{|g|
+        [ { _id: g._id }, g.changed_attributes ]
+      }.dup.reject{|g| g[1].blank? }
+      Gengo.bulk_update(calculated_gengos)
       voting = Voting.create(
-        last_counting_at: c_time,
-        sums: gengos.sum(&:rating),
-        counts: gengos.size
+        counting_start_at: count_target_range.first,
+        counting_end_at: count_target_range.end,
+        votes_count: votes.size
       )
-      voting.backup
+      voting.backup(votes)
+    rescue => error
+      voting.destroy unless voting.nil?
+      unless before_calculated_gengos.nil?
+        Gengo.bulk_update(before_calculated_gengos)
+      end
+    else # when no errors
+      votes.destroy_all
     end
   end
 

@@ -121,5 +121,25 @@ RSpec.describe Gengo, type: :model do
         )
       end
     end
+
+    describe ".bulk_update" do
+      it "pass args Array of operation -> [{ filter, operations }]" do
+        operations = create_list(:random_gengo, 4).map{|g|
+          [ { identifier: g.identifier }, { display_rating: g.rating + 100 } ]
+        }
+        result = Gengo.bulk_update(operations)
+        expect(result.modified_count).to eql(4)
+        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
+      end
+
+      it "pass args Array of instance -> [instance]" do
+        instances = create_list(:random_gengo, 4).map{|g|
+          g.display_rating = g.rating + 100; g
+        }
+        result = Gengo.bulk_update(instances)
+        expect(result.modified_count).to eql(4)
+        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
+      end
+    end
   end
 end
