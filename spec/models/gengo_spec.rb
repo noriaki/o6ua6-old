@@ -98,5 +98,28 @@ RSpec.describe Gengo, type: :model do
         expect(subject).to have_received(:won).with(loser)
       end
     end
+
+    describe "#attributes_will_change - serialized" do
+      before(:each) do
+        gengo.id = '__test__'
+        gengo.identifier = 'a' * 12
+        gengo.rating -= 100
+        gengo.rating_deviation -= 30
+      end
+
+      it "return Hash except `_id`" do
+        expect(gengo.attributes_will_change).not_to including('_id')
+      end
+
+      it "return Hash only will changing" do
+        expect(gengo.attributes_will_change.symbolize_keys).to(
+          including(
+            identifier: 'a' * 12,
+            rating: attributes_for(:gengo)[:rating] - 100,
+            rating_deviation: attributes_for(:gengo)[:rating_deviation] - 30
+          )
+        )
+      end
+    end
   end
 end

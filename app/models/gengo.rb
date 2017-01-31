@@ -44,6 +44,10 @@ class Gengo
     other.won(self)
   end
 
+  def attributes_will_change
+    changed.dup.reduce({}){|h,k| h[k] = self.send(k) unless k == '_id'; h }
+  end
+
   def to_player
     Glicko2::Player.from_obj self
   end
