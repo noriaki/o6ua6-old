@@ -49,8 +49,8 @@ RSpec.describe Gengo, type: :model do
     it :image_url do
       subject = gengo.image_urls
       expected = [
-        "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/38ab5e.jpg",
-        "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/ea4a5e.jpg"
+        "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/38ab5e.jpg",
+        "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/ea4a5e.jpg"
       ]
       expect(subject).to eql(expected)
     end

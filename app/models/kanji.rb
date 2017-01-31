@@ -16,7 +16,7 @@ class Kanji
   before_validation IdentifierCallback.new
 
   def image_url
-    "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{identifier}.jpg"
+    "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/#{identifier}.jpg"
   end
 
   class << self

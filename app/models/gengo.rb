@@ -29,7 +29,7 @@ class Gengo
 
   def image_urls
     surface.split('').map{|kanji|
-      "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{Identifier.identify(kanji)}.jpg"
+      "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/#{Identifier.identify(kanji)}.jpg"
     }
   end
 
