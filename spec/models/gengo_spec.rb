@@ -49,8 +49,8 @@ RSpec.describe Gengo, type: :model do
     it :image_url do
       subject = gengo.image_urls
       expected = [
-        "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/38ab5e.jpg",
-        "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/ea4a5e.jpg"
+        "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/38ab5e.jpg",
+        "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/ea4a5e.jpg"
       ]
       expect(subject).to eql(expected)
     end
@@ -87,15 +87,6 @@ RSpec.describe Gengo, type: :model do
         expect(loser.changed?).to be false
         expect(loser.reload.display_rating).to eql(loser_rating - 20)
       end
-
-      it "output log(info)" do
-        allow(Rails.logger).
-          to receive(:info).and_wrap_original do |m, *a, &block|
-          m.call(*a, &block)
-        end
-        winner.won(loser)
-        expect(Rails.logger).to have_received(:info).with("WL")
-      end
     end
 
     describe "#lost(other)" do
@@ -105,6 +96,49 @@ RSpec.describe Gengo, type: :model do
         subject = spy("Gengo")
         loser.lost(subject)
         expect(subject).to have_received(:won).with(loser)
+      end
+    end
+
+    describe "#attributes_will_change - serialized" do
+      before(:each) do
+        gengo.id = '__test__'
+        gengo.identifier = 'a' * 12
+        gengo.rating -= 100
+        gengo.rating_deviation -= 30
+      end
+
+      it "return Hash except `_id`" do
+        expect(gengo.attributes_will_change).not_to including('_id')
+      end
+
+      it "return Hash only will changing" do
+        expect(gengo.attributes_will_change.symbolize_keys).to(
+          including(
+            identifier: 'a' * 12,
+            rating: attributes_for(:gengo)[:rating] - 100,
+            rating_deviation: attributes_for(:gengo)[:rating_deviation] - 30
+          )
+        )
+      end
+    end
+
+    describe ".bulk_update" do
+      it "pass args Array of operation -> [{ filter, operations }]" do
+        operations = create_list(:random_gengo, 4).map{|g|
+          [ { identifier: g.identifier }, { display_rating: g.rating + 100 } ]
+        }
+        result = Gengo.bulk_update(operations)
+        expect(result.modified_count).to eql(4)
+        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
+      end
+
+      it "pass args Array of instance -> [instance]" do
+        instances = create_list(:random_gengo, 4).map{|g|
+          g.display_rating = g.rating + 100; g
+        }
+        result = Gengo.bulk_update(instances)
+        expect(result.modified_count).to eql(4)
+        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
       end
     end
   end

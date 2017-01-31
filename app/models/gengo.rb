@@ -1,13 +1,24 @@
 class Gengo
+  DEFAULT_BULK_UPDATE_OPTIONS =
+    { bypass_document_validation: false, ordered: false }
+  @@defaults = {
+    display_rating: Glicko2::DEFAULT_GLICKO_RATING,
+    rating: Glicko2::DEFAULT_GLICKO_RATING,
+    rating_deviation: Glicko2::DEFAULT_GLICKO_RATING_DEVIATION,
+    volatility: Glicko2::DEFAULT_VOLATILITY
+  }
+  cattr_reader :defaults
+
   include Mongoid::Document
   include RandomFinder
+  include SeedsImporter
 
   field :identifier, type: String
   field :surface, type: String
-  field :display_rating, type: Float, default: 1500.0
-  field :rating, type: Float, default: 1500.0
-  field :rating_deviation, type: Float, default: 350.0
-  field :volatility, type: Float, default: 0.06
+  field :display_rating, type: Float, default: @@defaults[:display_rating]
+  field :rating, type: Float, default: @@defaults[:rating]
+  field :rating_deviation, type: Float, default: @@defaults[:rating_deviation]
+  field :volatility, type: Float, default: @@defaults[:volatility]
 
   index({ identifier: 1 }, { unique: true, background: true })
 
@@ -20,7 +31,7 @@ class Gengo
 
   def image_urls
     surface.split('').map{|kanji|
-      "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{Identifier.identify(kanji)}.jpg"
+      "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/#{Identifier.identify(kanji)}.jpg"
     }
   end
 
@@ -29,11 +40,15 @@ class Gengo
                    calc_rating(self.display_rating, other.display_rating)
     self.update(display_rating: winner_rating)
     other.update(display_rating: loser_rating)
-    Rails.logger.info("WL") { "|||#{self.identifier}/#{other.identifier}" }
   end
 
   def lost(other)
     other.won(self)
+  end
+
+  def attributes_will_change
+    changed.dup.reduce({}){|h,k|
+      h[k] = self.send(k) unless k == '_id'; h }.with_indifferent_access
   end
 
   def to_player
@@ -41,10 +56,33 @@ class Gengo
   end
 
   class << self
+    def import!
+      filepath = Rails.root.join 'db', 'GengoCandidates.json'
+      self.import_from_json(filepath, @@defaults)
+    end
+
     def find_random(options = {})
       options[:limit] ||= 1
       options[:excepts] ||= []
       self.nin(identifier: options[:excepts]).random(options[:limit].to_i)
+    end
+
+    def bulk_update(operations)
+      self.collection.bulk_write(
+        operations.map {|operation|
+          if operation.is_a? Array
+            { update_one: {
+                filter: operation[0],
+                update: { '$set' => operation[1] }
+              } }
+          elsif operation.is_a? self
+            { update_one: {
+                filter: { identifier: operation.identifier },
+                update: { '$set' => operation.attributes_will_change }
+              } }
+          end
+        }, DEFAULT_BULK_UPDATE_OPTIONS
+      )
     end
   end
 

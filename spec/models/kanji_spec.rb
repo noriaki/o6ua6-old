@@ -24,7 +24,9 @@ RSpec.describe Kanji, type: :model do
 
     it :image_url do
       subject = kanji.image_url
-      expect(subject).to eql("https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{kanji.identifier}.jpg")
+      expected =
+        "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/#{kanji.identifier}.jpg"
+      expect(subject).to eql(expected)
     end
   end
 end
