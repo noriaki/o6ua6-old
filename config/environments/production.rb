@@ -63,8 +63,4 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
-
-  wl_logger = ActiveSupport::Logger.new(Tempfile.new('wl'))
-  wl_logger.formatter = ActiveSupport::Logger::SimpleFormatter.new
-  config.wl_logger = ActiveSupport::TaggedLogging.new(wl_logger)
 end
