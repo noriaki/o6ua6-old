@@ -33,12 +33,25 @@ RSpec.describe Vote, type: :model do
       it ".apply(uid, winner, loser) create a entity" do
         expect{ Vote.apply(uid, winner, loser) }.to change{ Vote.count }.by(1)
       end
+    end
 
-      it ".log(uid, winner, loser) output log(info)" do
-        logger = Rails.wl_logger
-        allow(logger).to receive(:info)
-        Vote.log(uid, winner, loser)
-        expect(logger).to have_received(:info).with("WL")
+    describe "counting votes to Gengo" do
+      let(:subject) { create :vote }
+      let(:winner) { create :gengo_winner }
+      let(:loser) { create :gengo_loser }
+      let(:log_format) {
+        attr = attributes_for :vote
+        "#{attr[:uid]}|#{attr[:winner]}/#{attr[:loser]}"
+      }
+
+      it "#to_log" do
+        expect(subject.to_log).to eql(log_format)
+      end
+
+      it ".to_log" do
+        2.times{ create :vote }
+        expected = Array.new(2, log_format).join("\n")
+        expect(Vote.to_log).to eql(expected)
       end
     end
   end

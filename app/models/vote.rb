@@ -23,6 +23,10 @@ class Vote
     self.class.log(uid, winner, loser)
   end
 
+  def to_log
+    "#{uid}|#{winner}/#{loser}"
+  end
+
   class <<self
     def apply(uid, winner, loser)
       self.create uid: uid, winner: winner.identifier, loser: loser.identifier
@@ -57,6 +61,10 @@ class Vote
         gengo.display_rating = gengo.rating
         gengo.save
       end
+    def to_log
+      self.each.map(&:to_log).join("\n")
+    end
+
       voting = Voting.create(
         last_counting_at: c_time,
         sums: gengos.sum(&:rating),
