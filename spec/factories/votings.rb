@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :voting do
-    last_counting_at "2017-01-26 18:31:53"
-    sums 1
-    counts 1
+    counting_start_at "1999-12-31 23:59:00"
+    counting_end_at "2000-01-01 00:00:00"
+    votes_count 1
   end
 end

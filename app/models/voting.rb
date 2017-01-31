@@ -1,16 +1,17 @@
 class Voting
   include Mongoid::Document
 
-  field :last_counting_at, type: Time
-  field :sums, type: Integer
-  field :counts, type: Integer
+  field :counting_start_at, type: ActiveSupport::TimeWithZone
+  field :counting_end_at, type: ActiveSupport::TimeWithZone
+  field :votes_count, type: Integer
 
-  index({ last_counting_at: -1 }, { background: true })
+  index({ counting_start_at: -1 }, { background: true })
+  index({ counting_end_at: -1 }, { background: true })
 
-  default_scope -> { desc(:last_counting_at) }
+  default_scope -> { desc(:counting_end_at) }
 
   def filename
-    'voting_' + last_counting_at.strftime('%Y%m%d-%H%M%S')
+    "voting_#{counting_end_at.strftime('%Y%m%d-%H%M%S')}_#{id.to_s}"
   end
 
   def backup
@@ -18,8 +19,8 @@ class Voting
   end
 
   class << self
-    def term(end_time = Time.now)
-      self.first.last_counting_at..end_time
+    def term(end_time = Time.zone.now)
+      self.first.counting_end_at..end_time
     end
   end
 end

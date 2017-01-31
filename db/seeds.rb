@@ -9,8 +9,4 @@
 Kanji.import!
 Gengo.import!
 
-Voting.create(
-  last_counting_at: Time.utc(2000),
-  sums: Gengo.sum(:rating),
-  counts: Gengo.count
-)
+FactoryGirl.create(:voting, votes_count: 0)
