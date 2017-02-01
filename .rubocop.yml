@@ -12,3 +12,19 @@ AllCops:
 
 Rails:
   Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - 'spec/**/*.rb'
+
+Metrics/LineLength:
+  Max: 100
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
