@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Gengo, type: :model do
-  describe "fields" do
+  describe 'fields' do
     it :identifier do
       is_expected.to have_fields(:identifier).of_type(String)
       is_expected.to validate_presence_of(:identifier)
@@ -43,7 +43,7 @@ RSpec.describe Gengo, type: :model do
     end
   end
 
-  describe "methods" do
+  describe 'methods' do
     let(:gengo) { create(:gengo) }
 
     it :image_url do
@@ -55,12 +55,12 @@ RSpec.describe Gengo, type: :model do
       expect(subject).to eql(expected)
     end
 
-    describe "#won(other)" do
+    describe '#won(other)' do
       let(:winner) { create(:gengo_winner) }
       let(:loser) { create(:gengo_loser) }
 
-      describe "call private method `calc_rating(winner_rating, loser_rating)`" do
-        it "return calculated [winner_rating, loser_rating]" do
+      describe 'call private method `calc_rating(winner_rating, loser_rating)`' do
+        it 'return calculated [winner_rating, loser_rating]' do
           expect(
             winner.__send__(:calc_rating,
                             winner.display_rating, loser.display_rating)
@@ -68,20 +68,20 @@ RSpec.describe Gengo, type: :model do
         end
       end
 
-      it "change winner display_rating + in DB" do
+      it 'change winner display_rating + in DB' do
         winner_rating = attributes_for(:gengo_winner)[:display_rating]
-        expect{ winner.won(loser) }.to(
-          change{ winner.display_rating }
+        expect { winner.won(loser) }.to(
+          change { winner.display_rating }
           .from(winner_rating).to(winner_rating + 20)
         )
         expect(winner.changed?).to be false
         expect(winner.reload.display_rating).to eql(winner_rating + 20)
       end
 
-      it "change loser display_rating - in DB" do
+      it 'change loser display_rating - in DB' do
         loser_rating = attributes_for(:gengo_loser)[:display_rating]
-        expect{ winner.won(loser) }.to(
-          change{ loser.display_rating }
+        expect { winner.won(loser) }.to(
+          change { loser.display_rating }
           .from(loser_rating).to(loser_rating - 20)
         )
         expect(loser.changed?).to be false
@@ -89,17 +89,17 @@ RSpec.describe Gengo, type: :model do
       end
     end
 
-    describe "#lost(other)" do
+    describe '#lost(other)' do
       let(:loser) { create(:gengo_loser) }
 
-      it "call to other#won(self)" do
-        subject = spy("Gengo")
+      it 'call to other#won(self)' do
+        subject = spy('Gengo')
         loser.lost(subject)
         expect(subject).to have_received(:won).with(loser)
       end
     end
 
-    describe "#attributes_will_change - serialized" do
+    describe '#attributes_will_change - serialized' do
       before(:each) do
         gengo.id = '__test__'
         gengo.identifier = 'a' * 12
@@ -107,11 +107,11 @@ RSpec.describe Gengo, type: :model do
         gengo.rating_deviation -= 30
       end
 
-      it "return Hash except `_id`" do
+      it 'return Hash except `_id`' do
         expect(gengo.attributes_will_change).not_to including('_id')
       end
 
-      it "return Hash only will changing" do
+      it 'return Hash only will changing' do
         expect(gengo.attributes_will_change.symbolize_keys).to(
           including(
             identifier: 'a' * 12,
@@ -122,23 +122,23 @@ RSpec.describe Gengo, type: :model do
       end
     end
 
-    describe ".bulk_update" do
-      it "pass args Array of operation -> [{ filter, operations }]" do
-        operations = create_list(:random_gengo, 4).map{|g|
-          [ { identifier: g.identifier }, { display_rating: g.rating + 100 } ]
-        }
+    describe '.bulk_update' do
+      it 'pass args Array of operation -> [{ filter, operations }]' do
+        operations = create_list(:random_gengo, 4).map do |g|
+          [{ identifier: g.identifier }, { display_rating: g.rating + 100 }]
+        end
         result = Gengo.bulk_update(operations)
         expect(result.modified_count).to eql(4)
-        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
+        Gengo.each { |g| expect(g.display_rating).to eql(g.rating + 100) }
       end
 
-      it "pass args Array of instance -> [instance]" do
-        instances = create_list(:random_gengo, 4).map{|g|
-          g.display_rating = g.rating + 100; g
-        }
+      it 'pass args Array of instance -> [instance]' do
+        instances = create_list(:random_gengo, 4).each do |g|
+          g.display_rating = g.rating + 100
+        end
         result = Gengo.bulk_update(instances)
         expect(result.modified_count).to eql(4)
-        Gengo.each{|g| expect(g.display_rating).to eql(g.rating + 100) }
+        Gengo.each { |g| expect(g.display_rating).to eql(g.rating + 100) }
       end
     end
   end

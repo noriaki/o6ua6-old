@@ -1,10 +1,14 @@
 AllCops:
   Include:
-    - "**/*.rake"
-    - "**/Gemfile"
-    - "**/Rakefile"
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
   Exclude:
-    - "vendor/**/*"
-    - "db/**/*"
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 2.3
+
 Rails:
   Enabled: true
