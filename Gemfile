@@ -40,6 +40,7 @@ end
 group :development do
   gem 'growl'
   gem 'guard-bundler', require: false
+  gem 'guard-process', require: false
   gem 'guard-rails', require: false
   gem 'guard-rake', require: false
   gem 'guard-rspec', require: false

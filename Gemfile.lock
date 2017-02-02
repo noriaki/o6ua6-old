@@ -127,6 +127,9 @@ GEM
       guard (~> 2.2)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
+    guard-process (1.2.1)
+      guard-compat (~> 1.2, >= 1.2.1)
+      spoon (~> 0.0.1)
     guard-rails (0.8.0)
       guard (~> 2.11)
       guard-compat (~> 1.0)
@@ -277,6 +280,8 @@ GEM
     sexp_processor (4.7.0)
     shellany (0.0.1)
     slop (3.6.0)
+    spoon (0.0.6)
+      ffi
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -333,6 +338,7 @@ DEPENDENCIES
   glicko2
   growl
   guard-bundler
+  guard-process
   guard-rails
   guard-rake
   guard-rspec
