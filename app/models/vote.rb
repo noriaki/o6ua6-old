@@ -22,10 +22,6 @@ class Vote
 
   scope :session, ->(term) { gte(c_at: term.begin).lt(c_at: term.end) }
 
-  def log
-    self.class.log(uid, winner, loser)
-  end
-
   def to_log
     "#{uid}|#{winner}/#{loser}"
   end
@@ -33,14 +29,6 @@ class Vote
   class <<self
     def apply(uid, winner, loser)
       self.create uid: uid, winner: winner.identifier, loser: loser.identifier
-    end
-
-    def log(uid, winner, loser)
-      winner_id = winner.respond_to?(:identifier) ? winner.identifier : winner
-      loser_id = loser.respond_to?(:identifier) ? loser.identifier : loser
-      Rails.wl_logger.info("WL") {
-        "#{uid}|#{winner}/#{loser}"
-      }
     end
 
     def dispose(players)
