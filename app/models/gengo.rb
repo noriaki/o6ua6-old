@@ -48,8 +48,8 @@ class Gengo
   end
 
   def attributes_will_change
-    changed.dup.each_with_object({}) do |key, ret|
-      ret[key] = send(key) unless key == '_id'
+    changed.dup.without('_id').each_with_object({}) do |key, ret|
+      ret[key] = send(key)
     end.with_indifferent_access
   end
 
