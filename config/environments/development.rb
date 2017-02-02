@@ -38,4 +38,9 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.assets.quiet = true
+
+  # assets serve webpack-dev-server on development
+  config.action_controller.asset_host = proc do |source|
+    'http://localhost:8080' if source =~ /\.js$/
+  end
 end

@@ -5,7 +5,11 @@ module.exports = {
     home: [path.resolve('js', 'AppHome.jsx')],
   },
   output: {
-    path: path.resolve('..', 'assets', 'javascripts'),
     filename: '[name].js',
-  }
+    path: path.resolve('..', 'assets', 'javascripts'),
+  },
+  devServer: {
+    publicPath: '/javascripts/',
+  },
+  devtool: 'cheap-module-eval-source-map',
 };
