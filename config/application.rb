@@ -29,9 +29,9 @@ module O6ua6
     config.log_formatter = ::Logger::Formatter.new
 
     logger = ActiveSupport::Logger.new(
-      Rails.root.join("log/#{Rails.env.to_s}.log"), 'daily')
+      Rails.root.join('log', "#{Rails.env}.log"), 'daily'
+    )
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
-
   end
 end
