@@ -15,6 +15,7 @@
   "author": "Noriaki Uchiyama <uchiyama.noriaki@gmail.com> (https://github.com/noriaki)",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^1.16.3"
   }
 }
