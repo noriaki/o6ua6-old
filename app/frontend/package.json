@@ -1,0 +1,16 @@
+{
+  "name": "o6ua6",
+  "version": "0.0.1",
+  "private": true,
+  "description": "o6ua6",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noriaki/o6ua6.git"
+  },
+  "author": "Noriaki Uchiyama <uchiyama.noriaki@gmail.com> (https://github.com/noriaki)",
+  "license": "MIT"
+}
