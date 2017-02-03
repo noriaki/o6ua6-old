@@ -1,5 +1,3 @@
-require 'version_bumper'
-
 namespace :frontend do
   namespace :bump do
     def bump_version(target, filepath)

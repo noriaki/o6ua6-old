@@ -29,7 +29,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-stack_explorer'
   gem 'rspec-rails', '~> 3.5'
-  gem 'version_bumper'
 end
 
 group :test do
@@ -65,5 +64,6 @@ gem 'haml-rails'
 gem 'mongoid', '~> 6'
 gem 'mongo_session_store-rails4',
     git: 'https://github.com/drgcms/mongo_session_store', branch: 'rails5'
+gem 'version_bumper'
 
 gem 'json'
