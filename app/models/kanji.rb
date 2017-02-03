@@ -1,6 +1,7 @@
 class Kanji
   include Mongoid::Document
   include RandomFinder
+  include SeedsImporter
 
   field :identifier, type: String
   field :surface, type: String
@@ -15,6 +16,13 @@ class Kanji
   before_validation IdentifierCallback.new
 
   def image_url
-    "https://s3-ap-northeast-1.amazonaws.com/o6ua6/images/#{identifier}.jpg"
+    "https://#{Aws::S3.bucket_name}.s3.amazonaws.com/images/#{identifier}.jpg"
+  end
+
+  class << self
+    def import!
+      filepath = Rails.root.join 'db', 'KanjiCandidates.json'
+      self.import_from_json(filepath)
+    end
   end
 end

@@ -10,7 +10,7 @@ require "action_controller/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 # require "sprockets/railtie"
-#require "rails/test_unit/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,12 +24,14 @@ module O6ua6
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.time_zone = 'Asia/Tokyo'
+
     config.log_formatter = ::Logger::Formatter.new
 
     logger = ActiveSupport::Logger.new(
-      Rails.root.join("log/#{Rails.env.to_s}.log"), 'daily')
+      Rails.root.join('log', "#{Rails.env}.log"), 'daily'
+    )
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
-
   end
 end

@@ -1,0 +1,30 @@
+AllCops:
+  Include:
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - 'spec/**/*.rb'
+
+Metrics/LineLength:
+  Max: 100
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
