@@ -10,7 +10,7 @@ require "action_controller/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 # require "sprockets/railtie"
-#require "rails/test_unit/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,19 +29,9 @@ module O6ua6
     config.log_formatter = ::Logger::Formatter.new
 
     logger = ActiveSupport::Logger.new(
-      Rails.root.join("log/#{Rails.env.to_s}.log"), 'daily')
+      Rails.root.join('log', "#{Rails.env}.log"), 'daily'
+    )
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
-
-    wl_logger = ActiveSupport::Logger.new(
-      Rails.root.join("log/wl_#{Rails.env.to_s}.log"), 'daily')
-    wl_logger.formatter = ActiveSupport::Logger::SimpleFormatter.new
-    config.wl_logger = ActiveSupport::TaggedLogging.new(wl_logger)
-
-    # alias `wl_logger` to `Rails.wl_logger`
-    Rails.instance_eval do
-      def wl_logger; Rails.application.config.wl_logger; end
-    end
-
   end
 end

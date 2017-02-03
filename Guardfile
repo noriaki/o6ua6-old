@@ -88,6 +88,16 @@ guard :rspec, cmd: "bundle exec rspec -fd" do
   end
 end
 
+# webpack-dev-server
+webpack_dev_server_process_opts = {
+  name: 'Webpack Dev Server',
+  command: %w(node_modules/.bin/webpack-dev-server --hot --inline),
+  dir: 'app/frontend'
+}
+guard :process, webpack_dev_server_process_opts do
+  watch(/webpack\.config\.js/)
+end
+
 # Guard-Rails supports a lot options with default values:
 # daemon: false                        # runs the server as a daemon.
 # debugger: false                      # enable ruby-debug gem.
@@ -104,7 +114,7 @@ end
 # zeus: false                          # enables zeus gem.
 # CLI: 'rails server'                  # customizes runner command. Omits all options except `pid_file`!
 
-guard 'rails' do
+guard 'rails', daemon: true do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
