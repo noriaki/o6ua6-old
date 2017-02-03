@@ -23,7 +23,6 @@ gem 'faraday_middleware', '0.10.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'mongoid-rspec', github: 'chocoken517/mongoid-rspec'
   gem 'pry-byebug'
@@ -60,6 +59,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'active_model_serializers'
 gem 'aws-sdk', '~> 2'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'glicko2'
 gem 'haml-rails'
 gem 'mongoid', '~> 6'
