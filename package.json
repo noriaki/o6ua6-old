@@ -1,13 +1,15 @@
 {
   "name": "o6ua6",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "see 'app/frontend/package.json'",
   "scripts": {
     "postinstall": "(cd app/frontend && npm install)"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
   "cacheDirectories": [
     "node_modules",
     "app/frontend/node_modules"

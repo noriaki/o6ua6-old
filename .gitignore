@@ -33,8 +33,6 @@ config/secrets.yml
 .env
 
 # javascript bundling assets
-!/app/assets/config/.keep
-/app/assets/config
 !/app/assets/images/.keep
 /app/assets/images
 !/app/assets/javascripts/.keep
