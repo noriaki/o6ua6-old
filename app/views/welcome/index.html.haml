@@ -1,4 +1,4 @@
 %h1 Welcome#index
 #content
-= include_gon init: true, namespace: 'o6ua6', camel_case: true
+= include_gon(init: true, namespace: 'o6ua6', camel_case: true, camel_depth: :recursive)
 = javascript_include_tag 'home'
