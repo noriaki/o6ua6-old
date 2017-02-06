@@ -26,6 +26,9 @@ module O6ua6
 
     config.time_zone = 'Asia/Tokyo'
 
+    # except production environment, assets serve from webpack-dev-server
+    config.action_controller.asset_host = 'localhost:8080'
+
     config.log_formatter = ::Logger::Formatter.new
 
     logger = ActiveSupport::Logger.new(
