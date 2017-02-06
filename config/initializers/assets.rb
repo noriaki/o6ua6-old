@@ -4,7 +4,8 @@ end
 
 module AssetUrlHelperWithManifest
   def compute_asset_path(source, options = {})
-    File.open(Rails.root.join('app', 'assets', 'config', 'manifest.json')) do |manifest|
+    filename = Rails.env.development? ? 'manifest-development.json' : 'manifest.json'
+    File.open(Rails.root.join('app', 'assets', 'config', filename)) do |manifest|
       source = JSON.parse(manifest.read)[source.to_s] || source
     end
     super(source, options)

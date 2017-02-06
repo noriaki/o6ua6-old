@@ -33,6 +33,7 @@ config/secrets.yml
 .env
 
 # javascript bundling assets
+/app/assets/config/manifest-development.json
 !/app/assets/images/.keep
 /app/assets/images
 !/app/assets/javascripts/.keep

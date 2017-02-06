@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "del ../assets/javascripts/*",
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack -p",
     "dev": "webpack-dev-server --inline"
   },
   "repository": {
