@@ -91,7 +91,7 @@ end
 # webpack-dev-server
 webpack_dev_server_process_opts = {
   name: 'Webpack Dev Server',
-  command: %w(node_modules/.bin/webpack-dev-server --hot --inline),
+  command: %w(node_modules/.bin/webpack-dev-server --inline),
   dir: 'app/frontend'
 }
 guard :process, webpack_dev_server_process_opts do

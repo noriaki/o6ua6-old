@@ -1,6 +1,4 @@
 %h1 Welcome#index
-%p
-  - @gengo.image_urls.each do |url|
-    = image_tag url, size: '320x225'
-    %br
+#content
+= include_gon(init: true, namespace: 'o6ua6', camel_case: true, camel_depth: :recursive)
 = javascript_include_tag 'home'
