@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     filename: '[name]-[hash].js',
-    chunkFilename: '[id]-[hash].js',
+    // chunkFilename: '[id]-[chunkhash].js',
     path: path.resolve('..', 'assets', 'javascripts'),
   },
   devServer: {

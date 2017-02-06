@@ -4,11 +4,14 @@
   "private": true,
   "description": "o6ua6",
   "main": "js/index.js",
+  "engines": {
+    "node": ">= 6.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "del ../assets/javascripts/*",
     "build": "webpack",
-    "dev": "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --inline"
   },
   "repository": {
     "type": "git",
