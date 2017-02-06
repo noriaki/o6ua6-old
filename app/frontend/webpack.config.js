@@ -27,4 +27,11 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    modules: [
+      path.resolve('js'),
+      'node_modules',
+    ],
+    extensions: ['.jsx', '.js', '.json'],
+  },
 };
