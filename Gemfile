@@ -60,6 +60,7 @@ gem 'active_model_serializers'
 gem 'aws-sdk', '~> 2'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'glicko2'
+gem 'gon'
 gem 'haml-rails'
 gem 'mongoid', '~> 6'
 gem 'mongo_session_store-rails4',
