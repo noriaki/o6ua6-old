@@ -1,10 +1,15 @@
 import React, { PropTypes } from 'react';
+import styled from 'styled-components';
 import Gengo from 'Components/Gengo';
 
+const VsWrapper = styled.div`
+display: flex;
+`;
+
 const Vs = ({ gengos }) => (
-  <div className="vs" style={{ display: 'flex' }}>
+  <VsWrapper>
     {gengos.map(gengo => <Gengo key={gengo.surface} {...gengo} />)}
-  </div>
+  </VsWrapper>
 );
 Vs.propTypes = {
   gengos: PropTypes.arrayOf(PropTypes.shape(Gengo.propTypes)).isRequired,
