@@ -40,6 +40,8 @@
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
+    "redux-action-types": "^1.0.1",
+    "redux-actions": "^1.2.1",
     "styled-components": "^1.4.3"
   },
   "babel": {
