@@ -1,14 +1,26 @@
 import React, { PropTypes } from 'react';
-import styled from 'styled-components';
 import Gengo from 'Components/Gengo';
 
+import styled from 'styled-components';
+
+// material-ui components
+import { GridList, GridTile } from 'material-ui/GridList';
+
 const VsWrapper = styled.div`
-display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  jsutify-content: space-around;
 `;
 
 const Vs = ({ gengos }) => (
   <VsWrapper>
-    {gengos.map(gengo => <Gengo key={gengo.surface} {...gengo} />)}
+    <GridList cellHeight="auto" padding={0}>
+      {gengos.map(gengo => (
+        <GridTile key={gengo.surface} onTouchTap={e => console.log('tap', e)}>
+          <Gengo {...gengo} />
+        </GridTile>
+      ))}
+    </GridList>
   </VsWrapper>
 );
 Vs.propTypes = {
