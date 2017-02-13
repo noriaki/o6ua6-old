@@ -36,9 +36,11 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "material-ui": "^0.17.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-action-types": "^1.0.1",
     "redux-actions": "^1.2.1",
