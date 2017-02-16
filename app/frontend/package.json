@@ -22,6 +22,9 @@
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
+    "babel-plugin-transform-async-generator-functions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.22.0",
     "del-cli": "^0.2.1",
@@ -35,6 +38,8 @@
     "webpack-dev-server": "^1.16.3"
   },
   "dependencies": {
+    "better-combine-reducers": "^1.0.3",
+    "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.0",
     "react": "^15.4.2",
@@ -44,7 +49,10 @@
     "redux": "^3.6.0",
     "redux-action-types": "^1.0.1",
     "redux-actions": "^1.2.1",
-    "styled-components": "^1.4.3"
+    "redux-devtools-extension": "^2.13.0",
+    "styled-components": "^1.4.3",
+    "superagent": "^3.4.3",
+    "superagent-promise-plugin": "^3.2.0"
   },
   "babel": {
     "presets": [
@@ -60,6 +68,13 @@
         }
       ],
       "react"
+    ],
+    "plugins": [
+      "transform-object-rest-spread",
+      "syntax-async-functions",
+      "transform-async-to-generator",
+      "transform-regenerator",
+      "transform-runtime"
     ]
   }
 }
