@@ -90,12 +90,28 @@ end
 
 # webpack-dev-server
 webpack_dev_server_process_opts = {
-  name: 'Webpack Dev Server',
+  name: 'webpack-dev-server',
   command: %w(node_modules/.bin/webpack-dev-server --inline),
   dir: 'app/frontend'
 }
 guard :process, webpack_dev_server_process_opts do
-  watch(/webpack\.config\.js/)
+  dir = webpack_dev_server_process_opts[:dir]
+  watch(%r{^#{dir}\/webpack\.config\.js$})
+  watch(%r{^#{dir}\/package\.json$})
+end
+
+# jest
+jest_process_opts = {
+  name: 'jest',
+  command: %w(node_modules/.bin/jest --notify --onlyChanged),
+  dir: 'app/frontend',
+  dont_stop: true
+}
+guard :process, jest_process_opts do
+  dir = jest_process_opts[:dir]
+  watch(%r{^#{dir}\/package\.json$})
+  watch(%r{^#{dir}\/spec\/js\/.*\.spec\.jsx?$})
+  watch(%r{^#{dir}\/js\/.*\.jsx?$})
 end
 
 # Guard-Rails supports a lot options with default values:
