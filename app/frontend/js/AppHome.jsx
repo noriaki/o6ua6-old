@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Vs from 'Components/Vs';
+import configureStore from 'Store';
+import Vs from 'Containers/Vs';
 
 // material-ui theme
 import { grey700 } from 'material-ui/styles/colors';
@@ -18,13 +20,13 @@ console.log('AppHome');
 
 const { gengos } = window.o6ua6;
 
-const App = () => (
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <Vs gengos={gengos} />
-  </MuiThemeProvider>
-);
+const store = configureStore({ gengo: { stage: gengos } });
 
 render(
-  <App />,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Vs />
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('content')
 );
