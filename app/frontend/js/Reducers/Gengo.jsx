@@ -13,13 +13,13 @@ export const initialState = {
 };
 
 export default handleActions({
-  [gengoAddHistory]: (state = initialState, { payload: { winner, loser } = {} }) => ({
+  [gengoAddHistory]: (state, { payload: { winner, loser } }) => ({
     ...state, history: [...state.history, [winner, loser]],
   }),
-  [gengoSetStage]: (state = initialState, { payload: { left, right } = {} }) => ({
+  [gengoSetStage]: (state, { payload: { left, right } }) => ({
     ...state, offstage: [], stage: [left, right],
   }),
-  [gengoSetOffstage]: (state = initialState, { payload: { left, right } = {} }) => ({
+  [gengoSetOffstage]: (state, { payload: { left, right } }) => ({
     ...state, offstage: [left, right],
   }),
 }, initialState);
