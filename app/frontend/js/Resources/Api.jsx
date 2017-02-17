@@ -5,22 +5,19 @@ import superagent from 'superagent';
 es6Promise.polyfill();
 const request = superagentPromisePlugin.patch(superagent);
 
-const defaultHeaders = {
-  Accept: 'application/json',
-  'Content-type': 'application/json',
-};
-
 class Api {
   constructor(client = request) {
     this.client = client;
   }
 
-  vote({ winner, loser }, headers = defaultHeaders) {
+  vote({ winner, loser }, headers = {}) {
     const data = `${winner.identifier}/${loser.identifier}`;
     return this.client
       .post('/vote')
+      .type('json')
+      .accept('json')
       .set(headers)
-      .send(JSON.stringify({ data }));
+      .send({ data });
   }
 }
 
