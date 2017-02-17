@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import Vs from 'Components/Vs';
+import { gengoSetStage } from 'Actions/Gengo';
 import ActionDispatcher from 'ActionDispatcher';
 
 const mapStateToProps = state => ({
@@ -14,8 +15,10 @@ const mapDispatchToProps = (dispatch) => {
       const loser = gengos.filter(g => (
         winner.identifier !== g.identifier
       ))[0];
-      dispatcher.voteAndPushHistory(winner, loser);
-      dispatcher.random2SetNextStage();
+      Promise.all([
+        dispatcher.voteAndPushHistory(winner, loser),
+        dispatcher.random2SetNextStage(),
+      ]).then(() => dispatch(gengoSetStage()));
     },
   };
 };
