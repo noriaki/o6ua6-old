@@ -16,12 +16,10 @@ describe('Actions/Gengo', () => {
   });
 
   it('gengoSetStage', () => {
-    const value = [{ id: '1' }, { id: '2' }];
     const expected = {
       type: SET_STAGE,
-      payload: { left: value[0], right: value[1] },
     };
-    expect(gengoSetStage(value)).toEqual(expected);
+    expect(gengoSetStage()).toEqual(expected);
   });
 
   it('gengoSetOffstage', () => {

@@ -17,13 +17,13 @@ describe('Reducers/Gengo', () => {
     ).toEqual(expected);
   });
 
-  it('set stage and purge offstage', () => {
+  it('move offstage to stage (purge offstage)', () => {
     const value = [{ id: '1' }, { id: '2' }];
     const expected = { ...initialState, stage: value };
     expect(
       gengoReducers(
-        { ...initialState, offstage: [{ id: '3' }] },
-        gengoSetStage(value)
+        { ...initialState, offstage: value },
+        gengoSetStage()
       )
     ).toEqual(expected);
   });
