@@ -35,8 +35,7 @@ describe('ActionDispatcher', () => {
   });
 
   describe('#random2SetNextStage', () => {
-    const defaultArguments = { limit: 2, excepts: [] };
-    const mockApiResponse = [{ id: '1' }, { id: '2' }];
+    const mockApiResponse = [{ identifier: '1' }, { identifier: '2' }];
     beforeEach(() => {
       client.random = jest.fn(() => Promise.resolve(mockApiResponse));
     });
@@ -46,8 +45,10 @@ describe('ActionDispatcher', () => {
     });
 
     it('calling client#random', async () => {
-      await dispatcher.random2SetNextStage();
-      expect(client.random).toBeCalledWith(defaultArguments);
+      await dispatcher.random2SetNextStage(
+        [{ identifier: '3' }, { identifier: '4' }]
+      );
+      expect(client.random).toBeCalledWith({ limit: 2, excepts: ['3', '4'] });
     });
 
     it('calling dispatch with redux action [SET_OFFSTAGE]', async () => {

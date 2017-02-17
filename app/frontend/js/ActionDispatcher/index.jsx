@@ -17,8 +17,9 @@ class ActionDispatcher {
     }
   }
 
-  async random2SetNextStage(excepts = []) {
+  async random2SetNextStage(history = []) {
     try {
+      const excepts = history.map(g => g.identifier);
       const gengos = await this.client.random({ limit: 2, excepts });
       this.dispatch(gengoSetOffstage(gengos));
     } catch (error) {

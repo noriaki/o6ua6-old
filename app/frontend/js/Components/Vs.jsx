@@ -13,9 +13,13 @@ const VsWrapper = styled.div`
   jsutify-content: space-around;
 `;
 
-const Vs = ({ gengos, handleTouchTap }) => {
+const Vs = ({ gengos, handleTouchTap, history }) => {
   const tiles = gengos.map(g => (
-    <GridTile key={g.surface} onTouchTap={e => handleTouchTap(g, gengos, e)}>
+    <GridTile
+      key={g.surface}
+      onTouchTap={e => (
+        handleTouchTap({ winner: g, gengos, history, e })
+      )}>
       <Gengo {...g} />
     </GridTile>
   ));
@@ -30,6 +34,9 @@ const Vs = ({ gengos, handleTouchTap }) => {
 Vs.propTypes = {
   gengos: PropTypes.arrayOf(PropTypes.shape(Gengo.propTypes)).isRequired,
   handleTouchTap: PropTypes.func.isRequired,
+  history: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.shape(Gengo.propTypes))
+  ).isRequired,
 };
 
 export default Vs;
