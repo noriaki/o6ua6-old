@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
         winner.identifier !== g.identifier
       ))[0];
       dispatcher.voteAndPushHistory(winner, loser);
+      dispatcher.random2SetNextStage();
     },
   };
 };
