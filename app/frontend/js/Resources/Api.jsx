@@ -19,6 +19,15 @@ class Api {
       .set(headers)
       .send({ data });
   }
+
+  random({ limit = 2, excepts = [] }, headers = {}) {
+    return this.client
+      .get('/gengo/random')
+      .type('json')
+      .accept('json')
+      .set(headers)
+      .query({ limit, excepts: excepts.join('/') });
+  }
 }
 
 export default Api;
