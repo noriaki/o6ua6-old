@@ -1,5 +1,6 @@
 import {
   gengoAddHistory,
+  gengoClearHistory,
   gengoSetStage,
   gengoSetOffstage,
 } from 'Actions/Gengo';
@@ -13,6 +14,17 @@ describe('Reducers/Gengo', () => {
       gengoReducers(
         undefined,
         gengoAddHistory({ winner: value[0], loser: value[1] })
+      )
+    ).toEqual(expected);
+  });
+
+  it('purge history', () => {
+    const value = [{ id: '1' }, { id: '2' }];
+    const expected = { ...initialState };
+    expect(
+      gengoReducers(
+        { ...initialState, history: [value] },
+        gengoClearHistory()
       )
     ).toEqual(expected);
   });

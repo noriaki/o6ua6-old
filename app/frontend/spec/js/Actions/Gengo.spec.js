@@ -1,8 +1,8 @@
 import {
-  ADD_HISTORY, SET_STAGE, SET_OFFSTAGE,
+  ADD_HISTORY, CLEAR_HISTORY, SET_STAGE, SET_OFFSTAGE,
 } from 'Constants/ActionTypes/Gengo';
 import {
-  gengoAddHistory, gengoSetStage, gengoSetOffstage,
+  gengoAddHistory, gengoClearHistory, gengoSetStage, gengoSetOffstage,
 } from 'Actions/Gengo';
 
 describe('Actions/Gengo', () => {
@@ -13,6 +13,13 @@ describe('Actions/Gengo', () => {
       payload: value,
     };
     expect(gengoAddHistory(value)).toEqual(expected);
+  });
+
+  it('gengoClearHistory', () => {
+    const expected = {
+      type: CLEAR_HISTORY,
+    };
+    expect(gengoClearHistory()).toEqual(expected);
   });
 
   it('gengoSetStage', () => {
