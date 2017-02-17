@@ -5,6 +5,8 @@ describe('Resources/Api', () => {
   let api;
   beforeEach(() => {
     spy = {
+      then: jest.fn().mockReturnThis(),
+      catch: jest.fn().mockReturnThis(),
       get: jest.fn().mockReturnThis(),
       post: jest.fn().mockReturnThis(),
       set: jest.fn().mockReturnThis(),

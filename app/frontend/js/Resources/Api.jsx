@@ -26,7 +26,8 @@ class Api {
       .type('json')
       .accept('json')
       .set(headers)
-      .query({ limit, excepts: excepts.join('/') });
+      .query({ limit, excepts: excepts.join('/') })
+      .then(res => res.body);
   }
 }
 
