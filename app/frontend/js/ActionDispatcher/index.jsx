@@ -7,7 +7,7 @@ class ActionDispatcher {
     this.client = client;
   }
 
-  async vote(winner, loser) {
+  async voteAndPushHistory(winner, loser) {
     try {
       await this.client.vote({ winner, loser });
       this.dispatch(gengoAddHistory({ winner, loser }));

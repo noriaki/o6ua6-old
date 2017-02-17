@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
       const loser = gengos.filter(g => (
         winner.identifier !== g.identifier
       ))[0];
-      dispatcher.vote(winner, loser);
+      dispatcher.voteAndPushHistory(winner, loser);
     },
   };
 };
