@@ -18,9 +18,9 @@ injectTapEventPlugin();
 
 console.log('AppHome');
 
-const { gengos } = window.o6ua6;
+const { gengos, history } = window.o6ua6;
 
-const store = configureStore({ gengo: { stage: gengos } });
+const store = configureStore({ gengo: { stage: gengos, history } });
 
 render(
   <MuiThemeProvider muiTheme={muiTheme}>
