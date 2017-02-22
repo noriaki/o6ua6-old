@@ -2,33 +2,55 @@ import React, { PropTypes } from 'react';
 
 import Gengo from 'Components/Gengo';
 
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // material-ui components
 import { GridList, GridTile } from 'material-ui/GridList';
 
-const VsWrapper = styled.div`
+const animateDrop = (dropping) => {
+  const fadeIn = keyframes`
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+  `;
+  return dropping ? `
+    animation-name: ${fadeIn};
+    animation-duration: 200ms;
+    animation-fill-mode: both;
+  ` : '';
+};
+
+const WrappedGridList = styled.div`
   display: flex;
   flex-wrap: wrap;
   jsutify-content: space-around;
 `;
 
 const Vs = ({ gengos, handleTouchTap, history }) => {
-  const tiles = gengos.map(g => (
-    <GridTile
-      key={g.surface}
-      onTouchTap={e => (
-        handleTouchTap({ winner: g, gengos, history, e })
-      )}>
-      <Gengo {...g} />
-    </GridTile>
-  ));
+  const tiles = gengos.map((gengo) => {
+    const tapTouchHandler = e =>
+            handleTouchTap({ winner: gengo, gengos, history, e });
+    const animationEndHandler = e => console.log(e);
+    const WrappedTile = styled.div`
+        ${animateDrop(gengo.dropping)}
+    `;
+    return (
+      <WrappedTile key={gengo.surface} onAnimationEnd={animationEndHandler}>
+        <GridTile onTouchTap={tapTouchHandler}>
+          <Gengo {...gengo} />
+        </GridTile>
+      </WrappedTile>
+    );
+  });
   return (
-    <VsWrapper>
-      <GridList cellHeight="auto" padding={0}>
+    <WrappedGridList>
+      <GridList cellHeight="auto">
         {tiles}
       </GridList>
-    </VsWrapper>
+    </WrappedGridList>
   );
 };
 Vs.propTypes = {
