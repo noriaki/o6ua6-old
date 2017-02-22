@@ -4,6 +4,11 @@ import {
   gengoSetStage,
   gengoSetOffstage,
 } from 'Actions/Gengo';
+import {
+  animationStartLoserDrop,
+  animationCompleteLoserDrop,
+} from 'Actions/Animation';
+
 import gengoReducers, { initialState } from 'Reducers/Gengo';
 
 describe('Reducers/Gengo', () => {
@@ -47,6 +52,34 @@ describe('Reducers/Gengo', () => {
       gengoReducers(
         undefined,
         gengoSetOffstage(value)
+      )
+    ).toEqual(expected);
+  });
+
+  it('set dropping to true', () => {
+    const value = [{ identifier: '1' }, { identifier: '2' }];
+    const expected = {
+      ...initialState,
+      stage: [value[0], { ...value[1], dropping: true }],
+    };
+    expect(
+      gengoReducers(
+        { ...initialState, stage: value },
+        animationStartLoserDrop(value[1].identifier)
+      )
+    ).toEqual(expected);
+  });
+
+  it('reset dropping to undefined', () => {
+    const value = [{ identifier: '1' }, { identifier: '2', dropping: true }];
+    const expected = {
+      ...initialState,
+      stage: [value[0], { identifier: value[1].identifier }],
+    };
+    expect(
+      gengoReducers(
+        { ...initialState, stage: value },
+        animationCompleteLoserDrop(value[1].identifier)
       )
     ).toEqual(expected);
   });
