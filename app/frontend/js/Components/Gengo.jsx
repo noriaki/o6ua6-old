@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import Kanji from 'Components/Kanji';
 
 const Gengo = ({ surface, imageUrls }) => (
-  <div>
+  <a href="javascript:void(0)">
     <Kanji imageUrl={imageUrls[0]} surface={surface[0]} />
     <Kanji imageUrl={imageUrls[1]} surface={surface[1]} />
-  </div>
+  </a>
 );
 Gengo.propTypes = {
   surface: PropTypes.string.isRequired,
