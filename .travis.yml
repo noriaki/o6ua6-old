@@ -7,7 +7,7 @@ cache:
   bundler: true
   yarn: true
   directories:
-    - node_modules
+    - "app/frontend/node_modules"
 bundler_args: --binstubs --without development production --jobs 3 --retry 3
 services:
   - mongodb
