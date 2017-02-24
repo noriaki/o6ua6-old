@@ -8,7 +8,7 @@
     "node": ">= 6.9.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "clean": "del ../assets/javascripts/*",
     "build": "NODE_ENV=production webpack -p",
     "dev": "webpack-dev-server --inline"
@@ -21,25 +21,41 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.22.1",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.10",
+    "babel-plugin-transform-async-generator-functions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.22.0",
     "del-cli": "^0.2.1",
+    "enzyme": "^2.7.1",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
+    "jest": "^18.1.0",
     "webpack": "^2.2.1",
     "webpack-assets-manifest": "^0.6.1",
     "webpack-dev-server": "^1.16.3"
   },
   "dependencies": {
+    "better-combine-reducers": "^1.0.3",
+    "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
+    "material-ui": "^0.17.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
-    "redux": "^3.6.0"
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-action-types": "^1.0.1",
+    "redux-actions": "^1.2.1",
+    "redux-devtools-extension": "^2.13.0",
+    "styled-components": "^1.4.3",
+    "superagent": "^3.4.3",
+    "superagent-promise-plugin": "^3.2.0"
   },
   "babel": {
     "presets": [
@@ -48,13 +64,28 @@
         {
           "targets": {
             "browsers": [
-              "last 2 versions"
+              "last 1 versions"
             ]
           },
           "modules": false
         }
       ],
       "react"
-    ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread",
+      "syntax-async-functions",
+      "transform-async-to-generator",
+      "transform-regenerator",
+      "transform-runtime"
+    ],
+    "env": {
+      "test": {
+        "plugins": ["transform-es2015-modules-commonjs"]
+      }
+    }
+  },
+  "jest": {
+    "modulePaths": ["<rootDir>/js/"]
   }
 }

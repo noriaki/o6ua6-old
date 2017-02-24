@@ -18,6 +18,11 @@ RSpec.describe Gengo, type: :model do
                       .with_options(unique: true, background: true)
     end
 
+    it :yomi do
+      is_expected.to have_fields(:yomi)
+                      .of_type(Array)
+    end
+
     it :rating do
       is_expected.to have_fields(:rating)
                       .of_type(Float)
