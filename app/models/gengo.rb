@@ -15,6 +15,7 @@ class Gengo
 
   field :identifier, type: String
   field :surface, type: String
+  field :yomi, type: Array
   field :display_rating, type: Float, default: @defaults[:display_rating]
   field :rating, type: Float, default: @defaults[:rating]
   field :rating_deviation, type: Float, default: @defaults[:rating_deviation]
@@ -59,7 +60,7 @@ class Gengo
 
   class << self
     def import!
-      filepath = Rails.root.join 'db', 'GengoCandidates.json'
+      filepath = Rails.root.join 'db', 'OnyomiGengoMap.json'
       import_from_json(filepath, @defaults)
     end
 
