@@ -7,20 +7,37 @@ import styled, { keyframes } from 'styled-components';
 // material-ui components
 import { GridList, GridTile } from 'material-ui/GridList';
 
-const animateDrop = (dropping) => {
-  const fadeIn = keyframes`
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-  `;
-  return dropping ? `
-    animation-name: ${fadeIn};
-    animation-duration: 200ms;
-    animation-fill-mode: both;
-  ` : '';
+const rotateOutToLeft = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+    opacity: 0.01;
+  }
+`;
+const rotateOutToRight = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg);
+    opacity: 0.01;
+  }
+`;
+const animateDrop = (dropping, isLeft) => {
+  const styles = {
+    start: `
+      animation-name: ${isLeft ? rotateOutToLeft : rotateOutToRight};
+      animation-duration: 200ms;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+    `,
+    end: `
+      opacity: 0.01;
+    `,
+  };
+  return styles[dropping] || '';
 };
 
 const WrappedGridList = styled.div`
@@ -30,15 +47,15 @@ const WrappedGridList = styled.div`
 `;
 
 const Vs = ({ gengos, handleTouchTap, history }) => {
-  const tiles = gengos.map((gengo) => {
+  const tiles = gengos.map((gengo, index) => {
     const tapTouchHandler = e =>
             handleTouchTap({ winner: gengo, gengos, history, e });
-    const animationEndHandler = e => console.log(e);
     const WrappedTile = styled.div`
-        ${animateDrop(gengo.dropping)}
+      will-change: animation;
+      ${animateDrop(gengo.dropping, index === 0)}
     `;
     return (
-      <WrappedTile key={gengo.surface} onAnimationEnd={animationEndHandler}>
+      <WrappedTile key={gengo.surface}>
         <GridTile onTouchTap={tapTouchHandler}>
           <Gengo {...gengo} />
         </GridTile>

@@ -1,5 +1,6 @@
 import ActionDispatcher from 'ActionDispatcher';
 import { gengoAddHistory, gengoSetOffstage } from 'Actions/Gengo';
+import { animationStartLoserDrop } from 'Actions/Animation';
 
 describe('ActionDispatcher', () => {
   let dispatch;
@@ -54,6 +55,32 @@ describe('ActionDispatcher', () => {
     it('calling dispatch with redux action [SET_OFFSTAGE]', async () => {
       await dispatcher.random2SetNextStage();
       expect(dispatch).toHaveBeenCalledWith(gengoSetOffstage(mockApiResponse));
+    });
+  });
+
+  describe('#animateLoserDrop', () => {
+    const target = {};
+    beforeEach(() => {
+      target.addEventListener = jest.fn((_, listener) => { listener(); });
+      target.removeEventListener = jest.fn();
+    });
+    it('returning Promise object', () => {
+      const subject = dispatcher.animateLoserDrop({ identifier: '1' }, target);
+      expect(typeof subject.then).toBe('function');
+    });
+
+    it('calling target#{add,remove}EventListener', async () => {
+      await dispatcher.animateLoserDrop({ identifier: '1' }, target);
+      expect(target.addEventListener).toHaveBeenCalled();
+      expect(target.removeEventListener).toHaveBeenCalled();
+    });
+
+    it('calling dispatch with redux action [START_LOSER_DROP]', async () => {
+      const value = { identifier: '1' };
+      await dispatcher.animateLoserDrop(value, target);
+      expect(dispatch).toHaveBeenCalledWith(
+        animationStartLoserDrop(value.identifier)
+      );
     });
   });
 });

@@ -56,11 +56,11 @@ describe('Reducers/Gengo', () => {
     ).toEqual(expected);
   });
 
-  it('set dropping to true', () => {
+  it('set dropping to "start"', () => {
     const value = [{ identifier: '1' }, { identifier: '2' }];
     const expected = {
       ...initialState,
-      stage: [value[0], { ...value[1], dropping: true }],
+      stage: [value[0], { ...value[1], dropping: 'start' }],
     };
     expect(
       gengoReducers(
@@ -70,11 +70,11 @@ describe('Reducers/Gengo', () => {
     ).toEqual(expected);
   });
 
-  it('reset dropping to undefined', () => {
-    const value = [{ identifier: '1' }, { identifier: '2', dropping: true }];
+  it('set dropping to "end"', () => {
+    const value = [{ identifier: '1' }, { identifier: '2', dropping: 'start' }];
     const expected = {
       ...initialState,
-      stage: [value[0], { identifier: value[1].identifier }],
+      stage: [value[0], { ...value[1], dropping: 'end' }],
     };
     expect(
       gengoReducers(

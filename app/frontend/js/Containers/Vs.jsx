@@ -2,9 +2,8 @@ import flatten from 'lodash/flatten';
 import { connect } from 'react-redux';
 
 import Vs from 'Components/Vs';
-import { gengoSetStage } from 'Actions/Gengo';
-import { animationStartLoserDrop } from 'Actions/Animation';
 import ActionDispatcher from 'ActionDispatcher';
+import { gengoSetStage } from 'Actions/Gengo';
 
 const mapStateToProps = state => ({
   gengos: state.gengo.stage,
@@ -18,12 +17,11 @@ const mapDispatchToProps = (dispatch) => {
       const loser = gengos.filter(g => (
         winner.identifier !== g.identifier
       ))[0];
-      dispatch(animationStartLoserDrop(loser.identifier));
       Promise.all([
+        dispatcher.animateLoserDrop(loser),
         dispatcher.voteAndPushHistory(winner, loser),
         dispatcher.random2SetNextStage(flatten(history)),
-      // ]).then(() => dispatch(gengoSetStage()));
-      ]);
+      ]).then(() => dispatch(gengoSetStage()));
     },
   };
 };

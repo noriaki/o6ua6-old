@@ -1,5 +1,8 @@
 import Api from 'Resources/Api';
 import { gengoAddHistory, gengoSetOffstage } from 'Actions/Gengo';
+import {
+  animationStartLoserDrop, animationCompleteLoserDrop,
+} from 'Actions/Animation';
 
 class ActionDispatcher {
   constructor(dispatch, client = new Api()) {
@@ -26,6 +29,19 @@ class ActionDispatcher {
       // this.dispatch() // TODO: handling error to reducer
       console.error(error);
     }
+  }
+
+  animateLoserDrop(loser, target = document) {
+    return new Promise((resolve, reject) => {
+      const handler = () => {
+        this.dispatch(animationCompleteLoserDrop(loser.identifier));
+        target.removeEventListener('animationend', handler, false);
+        resolve();
+      };
+      target.addEventListener('animationend', handler, false);
+      this.dispatch(animationStartLoserDrop(loser.identifier));
+      setTimeout(() => { reject(); }, 3000);
+    });
   }
 }
 

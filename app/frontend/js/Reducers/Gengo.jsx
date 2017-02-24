@@ -32,18 +32,16 @@ export default handleActions({
   }),
   [animationStartLoserDrop]: (state, { payload: identifier }) => {
     const stage = state.stage.map(gengo => (
-      gengo.identifier === identifier ? { ...gengo, dropping: true } : gengo
+      gengo.identifier === identifier ?
+        { ...gengo, dropping: 'start' } : gengo
     ));
     return { ...state, stage };
   },
   [animationCompleteLoserDrop]: (state, { payload: identifier }) => {
-    const stage = state.stage.map((gengo) => {
-      const copy = { ...gengo };
-      if (gengo.identifier === identifier) {
-        Reflect.deleteProperty(copy, 'dropping');
-      }
-      return copy;
-    });
+    const stage = state.stage.map(gengo => (
+      gengo.identifier === identifier ?
+        { ...gengo, dropping: 'end' } : gengo
+    ));
     return { ...state, stage };
   },
 }, initialState);
