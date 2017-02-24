@@ -7,6 +7,4 @@ services:
 before_install:
   - "echo 'gem: --no-document' > ~/.gemrc"
   - gem install bundler -v '~> 1.13'
-before_script:
-  - cp config/secrets.travis.yml config/secrets.yml
 script: "bundle exec rake spec"
