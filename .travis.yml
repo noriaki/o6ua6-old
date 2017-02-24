@@ -20,4 +20,4 @@ before_install:
   - "(cd app/frontend && yarn install)"
 script:
   - "bundle exec rake spec"
-  - "(cd app/frontend && npm test)"
+  - "(cd app/frontend && yarn test)"
