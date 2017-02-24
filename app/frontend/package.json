@@ -1,6 +1,6 @@
 {
   "name": "o6ua6",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "description": "o6ua6",
   "main": "js/index.js",
@@ -81,11 +81,15 @@
     ],
     "env": {
       "test": {
-        "plugins": ["transform-es2015-modules-commonjs"]
+        "plugins": [
+          "transform-es2015-modules-commonjs"
+        ]
       }
     }
   },
   "jest": {
-    "modulePaths": ["<rootDir>/js/"]
+    "modulePaths": [
+      "<rootDir>/js/"
+    ]
   }
 }
